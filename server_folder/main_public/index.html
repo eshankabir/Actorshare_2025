@@ -11,26 +11,15 @@
 <body>
     <h1>Main Device Interface</h1>
     <p>Monitoring connected node devices...</p>
-    <ul></ul>
+    <ul id="device_list"></ul>
     <div class="file-input-container">
         <input type="file" name="csvFile" id="csvFile" accept=".csv">
         <label for="csvFile">Choose CSV File</label>
     </div>
     <script>
-        const fileInput = document.getElementById("csvFile");
-        fileInput.addEventListener("change", function() {
-            const file = fileInput.files[0];
-            if (file && file.type === "text/csv") {
-                alert("CSV file has been selected: " + file.name);
-                handleCsvFile(file);
-            } else {
-                alert("Please select a CSV file.");
-            }
-        });
+        
 
-        function handleCsvFile(file) {
-            console.log(file.name);
-        }
     </script>
+    <button id="runAlgorithm">Run Algorithm</button>
 </body>
 </html>
