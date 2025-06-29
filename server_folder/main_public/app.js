@@ -1,5 +1,6 @@
 const socket = new WebSocket('ws://localhost:3000/main')
 let hasFile = false;
+const deviceList = document.getElementById('device_list');
 
 const device_names = [
     { name: 'Helen' },
@@ -20,11 +21,19 @@ fileInput.addEventListener("change", function() {
     }
 });
 
+device_names.forEach( device => {
+    const listItem = document.createElement('li');
+    listItem.textContent = device.name;
+    deviceList.appendChild(listItem);
+})
+
+/*
 function renderList() {
     document.getElementById('device_list').innerHTML = device_names.map((device) => {
         return `<li>${ device.name }`
     }).join('');
 }
+*/
 
 document.getElementById('runAlgorithm').addEventListener('click', function() {
     if (hasFile) {
@@ -50,7 +59,33 @@ function runPythonScript(input) {
     });  
 }*/
 
+
 function handleCsvFile(file) {
+    Papa.parse(file, {
+        skipEmptyLines: true,
+
+        complete : csv => {
+            var table = document.getElementById("roles");
+            table.innerHTML = "";
+
+            var thead = table.createTHead();
+            var tr = thead.insertRow();
+            for (let cell of csv.data[0]) {
+                let td = tr.insertCell();
+                td.innerHTML = cell;
+            }
+
+            var tbody = table.createTBody();
+            for (let i=1; i<csv.data.length; i++) {
+                let row = csv.data[i],
+                    tr = tbody.insertRow();
+                for (let cell of row) {
+                    let td = tr.insertCell();
+                    td.innerHTML = cell;
+                }
+            }
+        }
+    })
     runPythonScript(file);
 }
 
@@ -58,4 +93,3 @@ function handleCsvFile(file) {
 //    console.log(response);
 //}
 
-renderList();
