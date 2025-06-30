@@ -27,3 +27,50 @@ button {
     border-radius: 10px;
     padding: 10px;
 }
+
+.styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 15px 15px;
+}
+
+.styled-table tbody tr{
+    border-bottom: 1px solid #111111;
+}
+
+.styled-table tbody td {
+    border-right: 1px solid #111111;
+    border-left: 1px solid #111111;
+}
+
+.styled-table tbody tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+.femme-noir{ background-color: #a48a8a;}
+.wiz{ background-color: #86cdbf}
+.cyclone{ background-color: #d38181;}
+.indecent{ background-color: #d0d299;}
+.machinal{ background-color: #c2d7d3;}
+.alive{ background-color: #60ced0;}
+.r-town{ background-color: #ee4a4a;}
+.bandit{ background-color: #be34f1;}
+.caesar{ background-color: #7b5271;}
+.night-of-the-show{ background-color: #d19844;}
+.cuss-general{ background-color: #1899d4}
+
+.role-column{ font-weight: bolder; }

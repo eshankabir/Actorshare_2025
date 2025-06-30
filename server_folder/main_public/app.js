@@ -49,17 +49,6 @@ document.getElementById('runAlgorithm').addEventListener('click', function() {
 })
 
 
-/*
-function runPythonScript(input) {
-    $.ajax({
-        type: "POST",
-        url: "/findLoops.py",
-        data: { param: input },
-        success: callbackFunc
-    });  
-}*/
-
-
 function handleCsvFile(file) {
     Papa.parse(file, {
         skipEmptyLines: true,
@@ -79,15 +68,49 @@ function handleCsvFile(file) {
             for (let i=1; i<csv.data.length; i++) {
                 let row = csv.data[i],
                     tr = tbody.insertRow();
+                tr.classList.add('role-row');
                 for (let cell of row) {
                     let td = tr.insertCell();
                     td.innerHTML = cell;
                 }
             }
+
+            const rows = document.querySelectorAll(".role-row");
+
+            for(let i = 0; i < rows.length; i++) {
+                const role = rows[i].querySelector("td:first-child").textContent;
+
+                if (role.includes("FN")) {rows[i].classList.add("femme-noir"); }
+                else if (role.includes("Wiz")) {rows[i].classList.add("wiz"); }
+                else if (role.includes("RTC")) {rows[i].classList.add("cyclone"); }
+                else if (role.includes("IN")) {rows[i].classList.add("indecent"); }
+                else if (role.includes("ML")) {rows[i].classList.add("machinal"); }
+                else if (role.includes("AL")) {rows[i].classList.add("alive"); }
+                else if (role.includes("RT")) {rows[i].classList.add("r-town"); }
+                else if (role.includes("OAB")) {rows[i].classList.add("bandit"); }
+                else if (role.includes("JC")) {rows[i].classList.add("caesar"); }
+                else if (role.includes("CUSS NT")) {rows[i].classList.add("night-of-the-show"); }
+                else if (role.includes("CUSS")) {rows[i].classList.add("cuss-general"); }
+
+                rows[i].querySelector("td:first-child").classList.add("role-column");  
+            }
+
+            runPythonScript(file);
         }
     })
-    runPythonScript(file);
 }
+
+function runPythonScript(input) {
+    $.ajax({
+        type: "POST",
+        url: "/findLoops.py",
+        data: { param: input },
+        success: callbackFunc
+    });  
+}
+    
+
+    
 
 //function callbackFunc(response) {
 //    console.log(response);
