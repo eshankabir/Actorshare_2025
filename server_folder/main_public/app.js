@@ -16,6 +16,7 @@ fileInput.addEventListener("change", function() {
         alert("CSV file has been selected: " + file.name);
         hasFile = true;
         handleCsvFile(file);
+        sendFile();
     } else {
         alert("Please select a CSV file.");
     }
@@ -34,19 +35,6 @@ function renderList() {
     }).join('');
 }
 */
-
-document.getElementById('runAlgorithm').addEventListener('click', function() {
-    if (hasFile) {
-        const spawn = require("child_process").spawn;
-        const pythonProcess = spawn('python', ["./findLoops.py", arg1]);
-
-        pythonProcess.stdout.on('data', (data) => {
-
-        })
-    } else {
-        alert("No file found.");
-    }
-})
 
 
 function handleCsvFile(file) {
@@ -94,19 +82,28 @@ function handleCsvFile(file) {
 
                 rows[i].querySelector("td:first-child").classList.add("role-column");  
             }
-
-            runPythonScript(file);
         }
     })
 }
 
-function runPythonScript(input) {
-    $.ajax({
-        type: "POST",
-        url: "/findLoops.py",
-        data: { param: input },
-        success: callbackFunc
-    });  
+function sendFile() {
+    var file = document.getElementById('csvFile').files[0];
+    socket.send('csvFile:'+file.name);
+    var reader = new FileReader();
+    var rawData = new ArrayBuffer();
+
+    reader.loadend = function() {
+
+    }
+
+    reader.onload = function(e) {
+        rawData = e.target.result;
+        socket.send(rawData);
+        alert("File transferred.");
+        socket.send('end');
+    }
+
+    reader.readAsArrayBuffer(file);
 }
     
 

@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import networkx as nx
 from collections import defaultdict
 import sys
+import json
 
 #actorshare = pd.read_csv("/Users/eshankabir/Documents/code/Actorshare Algorithm Training Data - Base Case.csv")
 
@@ -28,8 +29,10 @@ def findLoops(actorshare):
     for actor in actor_names:
         if len(G.out_edges(actor)) == 0: call_list.append(actor)
 
-    print(call_list)
-
+    return {
+        "status": "success",
+        "call_list": call_list
+    }
 
     #finding chordless cycles in graph, runtime O((N+E)(C+1))
     if len(call_list) == 0:
@@ -43,5 +46,9 @@ def findLoops(actorshare):
             display = display + "]"
             print(display)
 
-print(findLoops(sys.argv[1]))
-sys.stdout.flush()
+if __name__ == "__main__":
+    csv_input_data = sys.stdin.read()
+    output_data = findLoops(csv_input_data)
+    print(json.dumps(output_data))
+    sys.stdout.flush()
+
